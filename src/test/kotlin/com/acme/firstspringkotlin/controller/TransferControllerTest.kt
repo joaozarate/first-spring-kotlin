@@ -35,7 +35,7 @@ class TransferControllerTest(@Autowired val mockMvc: MockMvc) {
         every { paymentsRepository.save(any()) } returns mockk()
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/transfers/new")
+            MockMvcRequestBuilders.post("/transfers")
             .content(ObjectMapper().writeValueAsString(transfer))
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
@@ -55,7 +55,7 @@ class TransferControllerTest(@Autowired val mockMvc: MockMvc) {
 
         every { paymentsRepository.findAll() } returns mutableListOf(mockTransaction)
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/transfers/all").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/transfers").accept(MediaType.APPLICATION_JSON))
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -64,7 +64,7 @@ class TransferControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `should return a bad request error if the request there's no body`() {
-        mockMvc.perform(MockMvcRequestBuilders.post("/transfers/new")
+        mockMvc.perform(MockMvcRequestBuilders.post("/transfers")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
             .andDo(MockMvcResultHandlers.print())

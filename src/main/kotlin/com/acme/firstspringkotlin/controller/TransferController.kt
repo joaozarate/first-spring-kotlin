@@ -17,13 +17,13 @@ class TransferController(
     val repository: TransferRepository
 ) {
 
-    @PostMapping("/new")
-    fun newTransfer (@RequestBody request: CreateTransactionRequest) {
+    @PostMapping
+    fun create (@RequestBody request: CreateTransactionRequest) {
         repository.save(request.toDBModel())
     }
 
-    @GetMapping("/all")
-    fun getAllTransfers(): List<GetTransactionResponse> {
+    @GetMapping
+    fun list(): List<GetTransactionResponse> {
         return repository.findAll().map { it.toTransactionResponse() }
     }
 
