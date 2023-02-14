@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option java_package = "com.acme.firstspringkotlin.v1";
+option java_outer_classname = "TransactionApiProto";
+option java_multiple_files = true;
+
+import "money.proto";
+import "date.proto";
+
+message CreateTransactionRequest {
+  string target_account = 1;
+  google.type.Money value = 2;
+  string description = 3;
+}
+
+message ListTransactionsResponse {
+
+  message Transaction {
+    string id = 1;
+    string target_account = 2;
+    google.type.Money value = 3;
+    string description = 4;
+    google.type.Date date = 5;
+  }
+
+  repeated Transaction transactions = 1;
+}
